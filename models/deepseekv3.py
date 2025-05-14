@@ -436,26 +436,6 @@ def dsv3_clean_orig_news(client, titile:str, paper):
     
     return response
 
-# def dsv3_rewrite_news(client, query:str):
-#     '''Функция для создания промпта к модели DeepSeek-v3'''
-#     min_words = len(query.split())
-
-#     print(f'min_words = {min_words}')
-
-#     response = client.chat.completions.create(
-#         model="deepseek-chat",
-#         messages=[
-#             {"role": "system", "content": f"Rewrite the following news article in your own words, based on the facts, names, and details from the text. Expand the story by adding relevant new information — come up with expert quotes, add a journalist's reasoning, and new facts. Write a detailed and lengthy article, but **do not include any word counts, statistics, or technical notes** in the output. The answer should contain only the pure text of the rewritten article, without any additional annotations and **Make the text long (at least {min_words} words)!**. **Don't write headlines in the text**. The original article:"},
-#             {"role": "user", "content": f"{query}"},
-#         ],
-#         stream=False,
-#         max_tokens=1024,
-#     )
-    
-#     return response
-
-
-
 
 
 
