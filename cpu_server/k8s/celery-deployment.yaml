@@ -1,0 +1,33 @@
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: celery-worker
+spec:
+  replicas: 2
+  selector:
+    matchLabels:
+      app: celery-worker
+  template:
+    metadata:
+      labels:
+        app: celery-worker
+    spec:
+      containers:
+      - name: celery-worker
+        image: fastapi-app:latest
+        imagePullPolicy: Never
+        command: ["celery", "-A", "celery_app", "worker", "--without-gossip", "--loglevel=info"]
+        env:
+        - name: APP_MODE
+          value: "celery_worker"
+        - name: RABBITMQ_DEFAULT_USER
+          valueFrom:
+            secretKeyRef:
+              name: app-secrets
+              key: RABBITMQ_DEFAULT_USER
+        - name: RABBITMQ_DEFAULT_PASS
+          valueFrom:
+            secretKeyRef:
+              name: app-secrets
+              key: RABBITMQ_DEFAULT_PASS
+        

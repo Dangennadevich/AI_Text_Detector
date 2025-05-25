@@ -1,0 +1,26 @@
+# model-training-cronjob.yaml
+apiVersion: batch/v1
+kind: CronJob
+metadata:
+  name: model-trainer
+spec:
+  schedule: "*/10 * * * *"
+  jobTemplate:
+    spec:
+      template:
+        spec:
+          containers:
+          - name: model-trainer
+            image: model-trainer:latest
+            imagePullPolicy: Never 
+            securityContext:  # Добавьте это!
+              runAsUser: 1000
+              fsGroup: 1000
+            volumeMounts:
+            - name: model-storage
+              mountPath: /data
+          volumes:
+          - name: model-storage
+            persistentVolumeClaim:
+              claimName: model-pvc
+          restartPolicy: OnFailure

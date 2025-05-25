@@ -1,0 +1,14 @@
+apiVersion: v1
+
+# Тип ресурса: PersistentVolumeClaim (запрос на выделение хранилища)
+kind: PersistentVolumeClaim
+
+metadata:
+  name: postgres-pvc
+
+spec:
+  accessModes:
+    - ReadWriteOnce  
+  resources:
+    requests:
+      storage: 1Gi

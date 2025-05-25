@@ -1,0 +1,15 @@
+apiVersion: v1
+kind: ConfigMap
+metadata:
+  name: postgres-exporter-config
+  namespace: default
+data:
+  postgres_exporter.yml: |
+    disabled_collectors: []
+    queries:
+      pg_database_size:
+        query: "SELECT pg_database_size(current_database())"
+        metrics:
+          - pg_database_size_bytes:
+              usage: "GAUGE"
+              description: "Size of the current database in bytes"

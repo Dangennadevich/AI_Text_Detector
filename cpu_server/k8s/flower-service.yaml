@@ -1,0 +1,13 @@
+apiVersion: v1
+kind: Service
+metadata:
+  name: flower
+spec:
+  type: NodePort
+  selector:
+    app: flower
+  ports:
+    - name: flower
+      port: 5555
+      targetPort: 5555
+      nodePort: 31555

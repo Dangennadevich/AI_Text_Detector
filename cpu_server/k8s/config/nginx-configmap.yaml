@@ -1,0 +1,28 @@
+apiVersion: v1
+data:
+  nginx.conf: "events {\n  worker_connections 1024; # Максимум соединений на один
+    процесс nginx\n}\n\n\nhttp {\n  upstream fastapi {\n    server fastapi-app:8000;
+    # Upstream для FastAPI сервиса\n  }\n\n  upstream static {\n    server static-server:80;
+    \ # Upstream для статики\n  }\n\n  server {\n    listen 80;\n\n      # Обработка
+    запросов начинающихся с /predict\n      location /predict { \n      proxy_pass
+    http://fastapi;  # Отправляем запрос на upstream fastapi (fastapi-app:8000)\n
+    \     proxy_set_header Host $host; # Доменное имя или IP-адрес, куда отправлен
+    запрос\n      proxy_set_header X-Real-IP $remote_addr; # реальный IP-адрес клиента,
+    который сделал запрос\n      proxy_set_header X-Forwarded-For $proxy_add_x_forwarded_for;
+    # список всех прокси-серверов, через которые прошел запрос.\n      proxy_set_header
+    X-Forwarded-Proto $scheme; # информация о протоколе\n    }\n\n    # Обработка
+    запросов начинающихся с /status/\n    location /status/ {\n      proxy_pass http://fastapi;
+    \ # Прокси на тот же FastAPI сервер\n      proxy_set_header Host $host; \n      proxy_set_header
+    X-Real-IP $remote_addr;\n      proxy_set_header X-Forwarded-For $proxy_add_x_forwarded_for;\n
+    \     proxy_set_header X-Forwarded-Proto $scheme;\n    }\n\n    # Обработка статических
+    файлов\n    location /static/ {\n      proxy_pass http://static;  # Перенаправляем
+    запросы на upstream static\n      autoindex off;  # Отключим автоматическое создание
+    списка файлов в директории      \n      expires 1y; # Кеширование 1 год\n      add_header
+    Cache-Control \"public, immutable\"; # Заголовок для кеширования\n    }\n  }\n}"
+kind: ConfigMap
+metadata:
+  creationTimestamp: "2025-03-02T15:48:25Z"
+  name: nginx-config
+  namespace: default
+  resourceVersion: "2449"
+  uid: 04ef1d3a-2a25-4b57-aaea-3973e326c860

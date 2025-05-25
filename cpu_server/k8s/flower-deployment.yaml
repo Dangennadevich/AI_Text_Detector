@@ -1,0 +1,39 @@
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: flower
+spec:
+  replicas: 1
+  selector:
+    matchLabels:
+      app: flower
+  template:
+    metadata:
+      labels:
+        app: flower
+    spec:
+      containers:
+      - name: flower
+        image: fastapi-app:latest
+        imagePullPolicy: Never
+        env:
+        - name: APP_MODE
+          value: "flower"
+        - name: RABBITMQ_DEFAULT_USER
+          valueFrom:
+            secretKeyRef:
+              name: app-secrets
+              key: RABBITMQ_DEFAULT_USER
+        - name: RABBITMQ_DEFAULT_PASS
+          valueFrom:
+            secretKeyRef:
+              name: app-secrets
+              key: RABBITMQ_DEFAULT_PASS
+        - name: CELERY_BROKER_URL
+          value: "amqp://$(RABBITMQ_DEFAULT_USER):$(RABBITMQ_DEFAULT_PASS)@rabbitmq:5672//"
+        - name: FLOWER_PORT
+          value: "5555"
+        - name: CELERY_QUEUE
+          value: "tasks_pred_gen_txt"
+        ports:
+        - containerPort: 5555
