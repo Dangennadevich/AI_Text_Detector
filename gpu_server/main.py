@@ -1,12 +1,12 @@
-import numpy as np
-import json
-import logging
-import pika
-import psycopg2
-from celery import Celery
-import os
+from model_inference import predict_paper
 from dotenv import load_dotenv
 from databases import Database
+from celery import Celery
+
+import numpy as np
+import psycopg2
+import logging
+import os
 
 logging.basicConfig(level=logging.INFO)
 logger = logging.getLogger(__name__)
@@ -29,9 +29,11 @@ CPU_SERVER_IP = os.getenv("CPU_SERVER_IP")
 if not CPU_SERVER_IP:
     raise ValueError("CPU_SERVER_IP must be set in the .env file")
 
+# Подключение к PSQL
 DATABASE_URL = f"postgresql://{POSTGRES_USER}:{POSTGRES_PASSWORD}@{CPU_SERVER_IP}:5432/rabbitmq_db"
 database = Database(DATABASE_URL, min_size=2, max_size=10)
 
+# Подключение к RabbitMQ
 celery_app = Celery(
     'gpu_tasks',
     broker=f'amqp://{RABBITMQ_DEFAULT_USER}:{RABBITMQ_DEFAULT_PASS}@{CPU_SERVER_IP}:5672//',
@@ -50,10 +52,11 @@ celery_app.conf.update(
 @celery_app.task(name='process_task', bind=True)
 def process_task(self, task_id, text):
     try:
+        text = text.replace('\n', ' ')
         logger.info(f"Processing task {task_id}: {text}")
         
-        prob = round(np.random.rand(), 3)
-        result = f"Processed text: {text}, probability = {prob}"
+        prob_llm_gen = predict_paper(text)
+        result = f"probability generatet news paper: {prob_llm_gen:4f}\n\nProcessed text: {text}"
 
         logger.info(f"Result: {result}")
         
