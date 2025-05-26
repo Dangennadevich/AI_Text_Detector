@@ -60,9 +60,9 @@
 
 <b>2.2 Копируем репозиторий с проектом</b>
 
-<code>git clone -b checkpoint_5 https://github.com/Dangennadevich/High-load-system.git </code>
+<code>git clone https://github.com/Dangennadevich/AI_Text_Detector.git</code>
 
-<code>mv High-load-system/* .</code>
+<code>mv AI_Text_Detector/* .</code>
 
 <b>2.3 Скачиваем Miniconda в корень (~/), Запускаем установку</b>
 
@@ -95,11 +95,11 @@
 
 <b>2.8 Создадим и виртуальное окружение без библиотек  </b>
 
-<code>conda create --no-default-packages -n train_env python=3.11</code>
+<code>conda create --no-default-packages -n cpu_env python=3.11</code>
 
-<code>conda activate train_env</code>
+<code>conda activate cpu_env</code>
 
-<b>2.9 [train_env] Установим Docker  </b>
+<b>2.9 [cpu_env] Установим Docker  </b>
 
 <a href="https://docs.docker.com/engine/install/ubuntu/" target="_blank">docs.docker.com</a>  
 
@@ -109,7 +109,7 @@
 
 <code>newgrp docker</code>
 
-<b>2.10 [train_env]  Настроим DNS-серверы для всех контейнеров, добавить в файл </b>
+<b>2.10 [cpu_env]  Настроим DNS-серверы для всех контейнеров, добавить в файл </b>
 
 <code>sudo nano /etc/docker/daemon.json</code>
 
@@ -117,15 +117,15 @@
   "dns": ["8.8.8.8", "8.8.4.4"]
 }</code>
 
-<b>2.11 [train_env]  Перезапустите Docker-демон  </b>
+<b>2.11 [cpu_env]  Перезапустите Docker-демон  </b>
 
 <code> sudo systemctl restart docker </code>
 
-<b>2.12 [train_env]  Проверим установку docker </b>
+<b>2.12 [cpu_env]  Проверим установку docker </b>
 
 <code> docker run hello-world </code>
 
-<b>2.13 [train_env]  Установи Minikube  </b>
+<b>2.13 [cpu_env]  Установи Minikube  </b>
 
 <code> curl -LO https://storage.googleapis.com/minikube/releases/latest/minikube-linux-amd64 </code>
 
@@ -133,12 +133,11 @@
 
 <code> minikube start --driver=docker </code>
 
-<b>2.14 [train_env]  Установи Minikube  </b>
+<b>2.14 [cpu_env]  Установи Minikube  </b>
 
 <code> curl -LO "https://dl.k8s.io/release/$(curl -L -s https://dl.k8s.io/release/stable.txt)/bin/linux/amd64/kubectl" </code>
 
 <code> sudo install -o root -g root -m 0755 kubectl /usr/local/bin/kubectl </code>
-
 
 
 <h4 align="center">3. Общая настройка окружения для работы сервера  [CPU & GPU]</h4>

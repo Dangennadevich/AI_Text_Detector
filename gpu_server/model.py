@@ -7,7 +7,7 @@ device = torch.device('cuda' if torch.cuda.is_available() else 'cpu')
 
 # print(device)
 
-MODEL_PATH = ""
+MODEL_PATH = "/app/model.pt"
 
 assert len(MODEL_PATH)>0, 'PATH модели не заполнен'
 
@@ -44,12 +44,12 @@ class BertBinaryClassifier(nn.Module):
 # Загружаем весов в модель, перенос на device и режим eval
 checkpoint = torch.load(
     MODEL_PATH,
-    weights_only=False
+    weights_only=False,
+    # map_location=torch.device(device)
 )
 
 model = BertBinaryClassifier(bert)
 
-model\
-    .load_state_dict(checkpoint['model_state_dict'])\
-    .to(device)\
-    .eval()
+model.load_state_dict(checkpoint['model_state_dict'])
+model.to(device)
+model.eval()

@@ -74,7 +74,7 @@ CPU_FASTAPI_SERV >> PSQL DB >> CPU_FASTAPI_SERV
 
 <code>kubectl port-forward --address 0.0.0.0 service/rabbitmq 5672:5672 > /dev/null 2>&1 &</code>
 
-<b>1.3.4 Проверяем UI и создаем очередь direct с именем direct_exchange</b>
+<b>1.3.4 Проверяем UI и создаем очередь direct с именем tasks_pred_gen_txt</b>
 
 <code>http://<IP_CPU_SERVER>:15672/#/exchanges</code>
 
