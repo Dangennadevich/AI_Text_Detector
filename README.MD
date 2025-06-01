@@ -4,8 +4,11 @@
 
 <h2 align="center">Identification of Artificially Generated Texts: Development of Methods for Ensuring Information Authenticity.</h2>
 
+<a href="https://docs.google.com/presentation/d/1413gc4VXvg5jWX42ovM05YFYzaNJxfgV/edit?usp=sharing&ouid=106286747768544640862&rtpof=true&sd=true
+" target="_blank">Презентация проекта ВКР</a>  
 
-<h3 align="left">>* Аннотация проекта</h3>
+
+<h3 align="left">* Аннотация проекта</h3>
 
 В рамках текущего репозитория выполнена практическая часть ВКР по созданию (и развертыванию) сервиса направленного на идентификацию ИИ сгенерированных политических новостей. Здесть представленны ноутбуки по сбору, обработке данных, построению алгоритмов (\notebooks), так же скрипты для сервисной части: cpu_server + gpu_server, эти 2 сервера связанны между собой и создают единую архитектуру для доступа к сервису по API.
 
@@ -37,6 +40,8 @@
 * 4) Поднимаем сервисы (ссылка на инструкции)
 * 5) Запрос к сервису
 
+По результату выполнения инструкций будят подняты сервисы: Postgresql, RabbitMQ (Celery, Flowers), Prometeus
+
 
 <h3 align="left">* Настройка серверов</h3>
 
@@ -49,6 +54,7 @@
 <code>usermod -aG sudo admin</code>
 
 <code>su -- admin</code>
+
 
 
 <h4 align="center">2. Настройка сервера для разработки (Miniconda, Poetry, Docker, ect) [CPU & GPU]</h4>
@@ -137,6 +143,7 @@
 <code> curl -LO "https://dl.k8s.io/release/$(curl -L -s https://dl.k8s.io/release/stable.txt)/bin/linux/amd64/kubectl" </code>
 
 <code> sudo install -o root -g root -m 0755 kubectl /usr/local/bin/kubectl </code>
+
 
 
 <h4 align="center">3. Общая настройка окружения для работы сервера  [CPU & GPU]</h4>
