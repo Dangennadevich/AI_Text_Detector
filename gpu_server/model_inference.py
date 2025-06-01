@@ -1,3 +1,9 @@
+import multiprocessing
+try:
+    multiprocessing.set_start_method('spawn', force=True)
+except RuntimeError:
+    pass 
+
 from model import model, tokenizer
 from typing import Optional
 

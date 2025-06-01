@@ -22,6 +22,8 @@ databases = "^0.9.0"
 numpy = "^2.2.3"
 celery = "^5.4.0"
 scikit-learn = "^1.6.1"
+transformers = "^4.40.0"  # или актуальная версия
+torch = { version = "2.6.0", extras = ["cu124"] }
 
 [build-system]
 requires = ["poetry-core>=2.0.0,<3.0.0"]

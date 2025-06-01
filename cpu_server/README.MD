@@ -7,16 +7,15 @@
     * GPU сервер с AI моделью, которая проводит скоринг по запросу с CPU сервера.
 
 
-
 <h1 align="center">СPU часть проекта</h1>
 
 При помощи Minikube поднимаем FastAPI сервис на первом сервере архитектуры. Так же в текущей версии проекта через Minicube поднимаеся вся необходимая архитектура для работы сервиса: PostgreSQL, RabbitMQ, Celery, Flower. На втором сервере поднимаем сервис, где будет работать модель.
 
-**/predict** Ручка получает сообщение от пользователя. После получения обрабатывает его - отправляет запрос на GPU через брокера сообщений rabbitmq. Так же сервис записывает уникальный номер запроса в БД и устанавливает статус "Pending".
+**/predict** Endpoint получает сообщение от пользователя. После получения обрабатывает его - отправляет запрос на GPU через брокера сообщений rabbitmq. Так же сервис записывает уникальный номер запроса в БД и устанавливает статус "Pending".
 
 CPU_FASTAPI_SERV >> [Celery (RabbitMQ), PSQL DB]
 
-**/status/{task_id}** По task_id из /predict вытаскиваем статус запроса из БД, результат работы AI модели с GPU сервера.
+**/status/{task_id}** Endpoint По task_id из /predict вытаскиваем статус запроса из БД, результат работы AI модели с GPU сервера.
 
 CPU_FASTAPI_SERV >> PSQL DB >> CPU_FASTAPI_SERV
 
@@ -147,12 +146,6 @@ CPU_FASTAPI_SERV >> PSQL DB >> CPU_FASTAPI_SERV
 <b>2.1.4 Пример ответа о запросе:</b>
 
 <code>{"task_id":"bdf1fdec-8985-415e-be24-e709216f9257","status":"completed","result":"Processed text: Привет как дела?, probability generated text = 0.527"}</code> 
-
-<b>2.1.5 Если работает только на localhost.. Возможно закрыт порт - откроем его</b>
-
-<code>sudo ufw allow 8000/tcp</code> 
-
-<code>sudo ufw reload</code> 
 
 
 <h3 align="center">3. Настроим Node Exporter </h3>

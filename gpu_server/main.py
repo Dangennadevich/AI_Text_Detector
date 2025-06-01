@@ -1,3 +1,9 @@
+import multiprocessing
+try:
+    multiprocessing.set_start_method('spawn', force=True)
+except RuntimeError:
+    pass
+
 from model_inference import predict_paper
 from dotenv import load_dotenv
 from databases import Database

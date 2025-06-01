@@ -1,13 +1,34 @@
+import multiprocessing
+try:
+    multiprocessing.set_start_method('spawn', force=True)
+except RuntimeError:
+    pass
+
+
 from transformers import BertTokenizerFast, BertModel
 from torch import nn
 
 import torch
+import logging
+
+# Настройка логирования
+logging.basicConfig(
+    level=logging.INFO,
+    format='%(asctime)s - %(name)s - %(levelname)s - %(message)s',
+    handlers=[
+        logging.StreamHandler(),
+        logging.FileHandler('model_predictions.log')
+    ]
+)
+logger = logging.getLogger(__name__)
+
+
 
 device = torch.device('cuda' if torch.cuda.is_available() else 'cpu')
+logger.info(f"Using device (model.py): {device}")
 
-# print(device)
 
-MODEL_PATH = "/app/model.pt"
+MODEL_PATH = "/workspace/bert_classifier_epoch_1_auc_1.0000.pt"
 
 assert len(MODEL_PATH)>0, 'PATH модели не заполнен'
 
@@ -53,3 +74,5 @@ model = BertBinaryClassifier(bert)
 model.load_state_dict(checkpoint['model_state_dict'])
 model.to(device)
 model.eval()
+
+logger.info(f"Model Ready! (model.py)")
