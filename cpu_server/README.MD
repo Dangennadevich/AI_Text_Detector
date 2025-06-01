@@ -220,23 +220,23 @@ WantedBy=multi-user.target</code>
 
 <code>kubectl port-forward service/prometheus-server 9090:80 --address 0.0.0.0</code> 
 
-<b>4.7 Проверка, 31.130.151.173 - внешний IP арендованной машины</b>
+<b>4.7 Проверка, IP_CPU_SERVER - внешний IP арендованной машины</b>
 
-<code>http://31.130.151.173:9090/targets</code> 
+<code>http://IP_CPU_SERVER:9090/targets</code> 
 
 ![Alt text](screenshots/prometheus-targets.png)
 
-<code>http://31.130.151.173:9100/metrics</code> 
+<code>http://IP_CPU_SERVER:9100/metrics</code> 
 
 ![Alt text](screenshots/prometheus-metrics.png)
 
-<code>http://31.130.151.173:9090/graph</code> 
+<code>http://IP_CPU_SERVER:9090/graph</code> 
 
 ![Alt text](screenshots/prometheus-graph.png)
 
 <b>4.8 Запрос метрик через Prometheus</b>
 
-<code>http://31.130.151.173:9090/graph</code> 
+<code>http://IP_CPU_SERVER:9090/graph</code> 
 
 <code>node_cpu_seconds_total</code> 
 
