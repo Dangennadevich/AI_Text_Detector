@@ -224,15 +224,15 @@ WantedBy=multi-user.target</code>
 
 <code>http://31.130.151.173:9090/targets</code> 
 
-![Alt text](prometheus-targets.png)
+![Alt text](screenshots/prometheus-targets.png)
 
 <code>http://31.130.151.173:9100/metrics</code> 
 
-![Alt text](prometheus-metrics.png)
+![Alt text](screenshots/prometheus-metrics.png)
 
 <code>http://31.130.151.173:9090/graph</code> 
 
-![Alt text](prometheus-graph.png)
+![Alt text](screenshots/prometheus-graph.png)
 
 <b>4.8 Запрос метрик через Prometheus</b>
 
@@ -244,5 +244,5 @@ WantedBy=multi-user.target</code>
 
 <b>4.9 Пример метрик Postgres SQL</b>
 
-![Alt text](prometheus-postgres-exporter.png)
+![Alt text](screenshots/prometheus-postgres-exporter.png)
 
